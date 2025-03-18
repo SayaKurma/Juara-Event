@@ -1,0 +1,393 @@
+@keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes shine {
+    0% { background-position: -100% 0; }
+    100% { background-position: 200% 0; }
+}
+
+@keyframes confetti {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(1000px) rotate(720deg); }
+}
+
+@keyframes sparkle {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+@keyframes ribbon-wave {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    perspective: 1000px;
+}
+
+.bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.confetti-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    transform-style: preserve-3d;
+    max-width: 1000px;
+    width: 90%;
+    margin: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.header {
+    position: relative;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+h1 {
+    font-size: 3em;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(90deg, #ff8a00, #e52e71, #ff8a00);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shine 3s linear infinite;
+    text-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.sparkle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.sparkle::before, .sparkle::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #fff;
+    animation: sparkle 2s infinite;
+}
+
+.sparkle::before {
+    top: 20%;
+    left: 20%;
+    animation-delay: 0.2s;
+}
+
+.sparkle::after {
+    top: 25%;
+    right: 15%;
+    animation-delay: 0.8s;
+}
+
+.winners {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 20px;
+    perspective: 1000px;
+}
+
+.winner-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px 20px 20px;
+    width: 220px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    transform-style: preserve-3d;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.winner-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.podium {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    z-index: 1;
+}
+
+.trophy {
+    font-size: 3.5em;
+    margin: 10px 0 20px;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.5s ease;
+}
+
+.trophy i {
+    background: linear-gradient(135deg, #ffdd00, #ffa500);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 5px 10px rgba(255, 165, 0, 0.5));
+}
+
+.winner-card:hover .trophy {
+    transform: translateY(-10px) scale(1.1) rotate(5deg);
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    transform: translateZ(20px);
+}
+
+h2 {
+    font-size: 1.5em;
+    margin: 0 0 10px;
+    font-weight: 600;
+}
+
+.name {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 5px 0;
+    color: #fff;
+}
+
+.score {
+    font-size: 1em;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 5px 0;
+}
+
+.ribbon {
+    position: absolute;
+    width: 40px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.1);
+    top: -20px;
+    z-index: 0;
+    animation: ribbon-wave 3s ease-in-out infinite;
+}
+
+.ribbon.left {
+    left: 30px;
+    transform-origin: top left;
+    animation-delay: 0.5s;
+}
+
+.ribbon.right {
+    right: 30px;
+    transform-origin: top right;
+    animation-delay: 0.8s;
+}
+
+.crown {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2em;
+    z-index: 2;
+}
+
+.crown i {
+    color: #ffdd00;
+    filter: drop-shadow(0 5px 10px rgba(255, 221, 0, 0.5));
+}
+
+#first-place {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.1));
+    height: 320px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    z-index: 1;
+    transform: translateZ(50px);
+    animation: float 4s ease-in-out infinite;
+}
+
+#second-place {
+    background: linear-gradient(135deg, rgba(192, 192, 192, 0.3), rgba(192, 192, 192, 0.1));
+    height: 280px;
+    border: 1px solid rgba(192, 192, 192, 0.3);
+    margin-top: 40px;
+}
+
+#third-place {
+    background: linear-gradient(135deg, rgba(205, 127, 50, 0.3), rgba(205, 127, 50, 0.1));
+    height: 240px;
+    border: 1px solid rgba(205, 127, 50, 0.3);
+    margin-top: 80px;
+}
+
+#first-place .trophy i {
+    background: linear-gradient(135deg, #ffdd00, #ffa500);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+#second-place .trophy i {
+    background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+#third-place .trophy i {
+    background: linear-gradient(135deg, #cd7f32, #a05a2c);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.special-award {
+    margin-top: 60px;
+    position: relative;
+    padding-top: 20px;
+}
+
+.special-award-title {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.special-award-title h2 {
+    font-size: 2em;
+    background: linear-gradient(90deg, #9c27b0, #3f51b5, #9c27b0);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shine 4s linear infinite;
+    display: inline-block;
+}
+
+.active-participant {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.active-card {
+    background: linear-gradient(135deg, rgba(156, 39, 176, 0.3), rgba(63, 81, 181, 0.1));
+    border-radius: 20px;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(156, 39, 176, 0.3);
+    transition: all 0.5s ease;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.active-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.active-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+}
+
+.active-icon i {
+    background: linear-gradient(135deg, #9c27b0, #3f51b5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 5px 10px rgba(156, 39, 176, 0.5));
+}
+
+.active-content h3 {
+    font-size: 1.5em;
+    margin: 0 0 10px;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .winners {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .winner-card {
+        margin: 10px 0;
+        width: 80%;
+        max-width: 250px;
+    }
+    
+    #first-place, #second-place, #third-place {
+        height: auto;
+        margin-top: 0;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    .special-award-title h2 {
+        font-size: 1.8em;
+    }
+    
+    .active-card {
+        width: 80%;
+        max-width: 250px;
+    }
+}
